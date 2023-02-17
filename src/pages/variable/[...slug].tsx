@@ -3,13 +3,28 @@ import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 import { useRouter } from 'next/router'
 
+export interface dataType {
+    id: number;
+    name: string;
+    tag: string;
+    color: string;
+    criteria: {
+      type: string;
+      text: string;
+      variable: any;
+    }[]
+  }
+  
+  interface Props {
+    stockData: dataType[]
+  }
 
-export default function Variable({ data }) {
+export default function Variable({ stockData } : Props) {
   const router = useRouter()
   const slugData = (router.query.slug as string[]) || []
-  const scanData: any[] = data?.data
-  let scanItem: any = scanData?.find(item => item.id.toString() === slugData[2])
-  let variableData: any = scanItem?.criteria[slugData[1]].variable[slugData[0]]
+  const scanData: dataType[] = stockData
+  const scanItem: dataType | undefined = scanData.find(item => item.id.toString() === slugData[2])
+  const variableData: any = scanItem?.criteria[parseInt(slugData[1])].variable[slugData[0]]
 
   return (
     <>
@@ -51,8 +66,8 @@ export default function Variable({ data }) {
                     </div>
                 </div> :
                 <ul role="list" className="divide-y divide-gray-200">
-                    {variableData?.values.sort((a, b) => {return a-b}).map((value) => (
-                        <li className="flex py-4">
+                    {variableData?.values.sort((a: number, b: number) => {return a-b}).map((value: string, index: number) => (
+                        <li key={index} className="flex py-4">
                             <p className="font-medium text-gray-900">{value}</p>
                         </li>
                     ))}
@@ -69,7 +84,7 @@ export async function getStaticPaths() {
     const res = await fetch('https://jsonware.com/api/v1/json/402b9d6d-9862-4c19-b336-c456999258d6')
     const data = await res.json()
 
-    const paths = data.data.map((dataItem) => ({
+    const paths = data.data.map((dataItem: dataType) => ({
         params: {
             slug: [ dataItem.id.toString() ],
         }
@@ -81,10 +96,11 @@ export async function getStaticPaths() {
 export async function getStaticProps() {
     const res = await fetch('https://jsonware.com/api/v1/json/402b9d6d-9862-4c19-b336-c456999258d6')
     const data = await res.json()
+    const stockData = data.data
   
     return {
       props: {
-        data,
+        stockData,
       },
     }
   }

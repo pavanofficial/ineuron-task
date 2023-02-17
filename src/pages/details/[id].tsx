@@ -3,11 +3,27 @@ import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 import { useRouter } from 'next/router'
 
-export default function Detail({ data }) {
+export interface dataType {
+  id: number;
+  name: string;
+  tag: string;
+  color: string;
+  criteria: {
+    type: string;
+    text: string;
+    variable: any;
+  }[]
+}
+
+interface Props {
+  stockData: dataType[]
+}
+
+export default function Detail({ stockData } : Props) {
   const router = useRouter()
   const { id } = router?.query
-  const scanData: any[] = data?.data
-  let scanItem: any = scanData?.find(item => item.id.toString() === id)
+  const scanData: dataType[] = stockData
+  const scanItem: dataType | undefined = scanData.find(item => item.id.toString() === id)
 
   const variableTextProcessor = (text: string, variables: any, criteriaIndex: number) => {
     let textWords = text.split(' ')
@@ -49,10 +65,10 @@ export default function Detail({ data }) {
                 <ul data-testid='criteriaListing' role="list" className="divide-y divide-gray-200">
                     {scanItem?.criteria?.map((criteriaItem, criteriaIndex) => (
                         criteriaItem.type == 'plain_text' ?
-                        <li className="flex py-4">
+                        <li key={criteriaIndex} className="flex py-4">
                             <p className="font-medium text-gray-900">{criteriaItem.text}</p>
                         </li> : 
-                        <li className="flex py-4">
+                        <li key={criteriaIndex} className="flex py-4">
                             <p className={`${styles.variable} text-gray-900 font-medium`}><span dangerouslySetInnerHTML={{ __html: variableTextProcessor(criteriaItem.text, criteriaItem.variable, criteriaIndex)}}></span></p>
                         </li>
                     ))}
@@ -68,7 +84,7 @@ export async function getStaticPaths() {
     const res = await fetch('https://jsonware.com/api/v1/json/402b9d6d-9862-4c19-b336-c456999258d6')
     const data = await res.json()
 
-    const paths = data.data.map((dataItem) => ({
+    const paths = data.data.map((dataItem: dataType) => ({
         params: { id: dataItem.id.toString() },
     }))
 
@@ -78,10 +94,11 @@ export async function getStaticPaths() {
 export async function getStaticProps() {
     const res = await fetch('https://jsonware.com/api/v1/json/402b9d6d-9862-4c19-b336-c456999258d6')
     const data = await res.json()
+    const stockData = data.data
   
     return {
       props: {
-        data,
+        stockData,
       },
     }
   }
