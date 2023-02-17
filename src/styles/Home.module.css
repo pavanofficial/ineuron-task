@@ -1,10 +1,11 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   padding: 6rem;
   min-height: 100vh;
+  background-color: #F3F4F6;
+  justify-content: center;
 }
 
 .description {
@@ -121,6 +122,14 @@
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: 0px 2px 8px -1px #0000001a;
+}
+
+.variable a {
+  color: #4F46E5
+}
+
+.variable a:hover {
+  text-decoration: underline;
 }
 
 .thirteen::before,

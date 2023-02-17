@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders homepage unchanged 1`] = `
+<div>
+  <main
+    class="flex flex-col justify-center items-center p-6 bg-gray-100 min-h-[100vh]"
+  >
+    <div>
+      <button
+        class="inline-flex gap-2 items-center my-3 text-black"
+        data-testid="backBtn"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Go back
+      </button>
+      <div
+        class="overflow-hidden bg-white shadow sm:rounded-md md:min-w-[30vw] px-4 py-5 sm:px-4 w-4ull"
+        data-testid="contentBox"
+      >
+        <h3
+          class="text-2xl font-medium leading-6 text-gray-900"
+          data-testid="title"
+        />
+        <div
+          class="mt-3 flex flex-shrink-0"
+          data-testid="tag"
+        >
+          <p
+            class="bg-red-100 text-red-800 inline-flex rounded-full px-2 text-xs font-semibold leading-5"
+          />
+        </div>
+        <hr
+          class="w-full border-[0.1px] border-gray-200 mt-5"
+        />
+        <ul
+          class="divide-y divide-gray-200"
+          data-testid="criteriaListing"
+          role="list"
+        />
+      </div>
+    </div>
+  </main>
+</div>
+`;

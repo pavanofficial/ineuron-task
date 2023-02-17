@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders homepage unchanged 1`] = `
+<div>
+  <main
+    class="flex flex-col justify-center items-center p-6 bg-gray-100 min-h-[100vh]"
+  >
+    <div
+      class="max-w-sm rounded-md overflow-hidden shadow-lg bg-white justify-self-center min-w-[34vw]"
+      data-testid="cardBox"
+    >
+      <ul
+        class="divide-y divide-gray-200"
+        data-testid="listing"
+        role="list"
+      />
+    </div>
+  </main>
+</div>
+`;
